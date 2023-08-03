@@ -1,4 +1,4 @@
-# Ecoomerce-Data-Analysis-By-using-Sql
+# Ecommerce-Data-Analysis-By-using-Sql
 
 # Problem Statement
 
