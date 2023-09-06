@@ -63,13 +63,8 @@ order by orderid  asc;
  
 
  
- 
- 
- 
-
   
-  
-# 2. Identify top 10 most expensive orders. Identify the customers who placed these orders. Print Customer ID, First Name, Last Name and Total Order amount in the result set.Sort the result set in descending order of Total Order Amount.
+# 9. Identify top 10 most expensive orders. Identify the customers who placed these orders. Print Customer ID, First Name, Last Name and Total Order amount in the result set.Sort the result set in descending order of Total Order Amount.
 select c.customerid, firstname, lastname, max(total_order_amount) as Expensive_Orders from customers
 as c join orders as o on c.customerid=o.customerid
 group by c.customerid, firstname, lastname
@@ -77,7 +72,7 @@ order by Expensive_Orders desc limit 10;
 
 
 
-# 3. Identiy top 10 customers who placed the most number of orders. Print Customer ID, First Name, Last Name and Number of orders placed. Sort the result set in descending order of Number of orders, for same Number of orders sort such records in ascending order of Customer ID.
+# 10. Identiy top 10 customers who placed the most number of orders. Print Customer ID, First Name, Last Name and Number of orders placed. Sort the result set in descending order of Number of orders, for same Number of orders sort such records in ascending order of Customer ID.
 select c.customerid, firstname, lastname, count(distinct o.orderid) as Most_Number_Of_Orders from customers 
 as c join orders as o on c.customerid=o.customerid
 group by c.customerid, firstname, lastname
@@ -86,7 +81,7 @@ order by Most_Number_Of_Orders desc, c.customerid limit 10;
 
 
 
-# 4. Print all details of the Customer who ordered only once.
+# 11. Print all details of the Customer who ordered only once.
 select c.* from customers  as c 
 join(select customerid, count(customerid) as Count_Of_Order
 from orders 
@@ -94,7 +89,7 @@ group by customerid
 having count(customerid)=1) as o
 on c.customerid=o.customerid;
 
-# 5. Identify top 3 Countries whose customers placed the most orders. Print Country and Number of Orders. Sort the result set in descendng order of Number of orders.
+# 12. Identify top 3 Countries whose customers placed the most orders. Print Country and Number of Orders. Sort the result set in descendng order of Number of orders.
 select country, count(distinct o.orderid) as Most_Orders from customers as c 
 join orders as o on c.customerid=o.customerid
 group by country
@@ -102,7 +97,7 @@ order by Most_Orders  desc limit 3;
 
 
 
-# 6. Identify top 3 Countries whose customers placed the least orders. Print Country and Number of Orders. Sort the result set in ascending order of Number of orders.
+# 13. Identify top 3 Countries whose customers placed the least orders. Print Country and Number of Orders. Sort the result set in ascending order of Number of orders.
 select country, count(distinct o.orderid) as Least_Orders from customers as c 
 join orders as o on c.customerid=o.customerid
 group by country
@@ -110,7 +105,7 @@ order by Least_Orders  asc limit 3;
 
 
 
-# 7. Identify top 3 Products which were ordered the most in quantity across all orders. Print Product ID, Product Name and corresponding total quantity. Sort the result set in descending order of total quantity.
+# 14. Identify top 3 Products which were ordered the most in quantity across all orders. Print Product ID, Product Name and corresponding total quantity. Sort the result set in descending order of total quantity.
 select p.productid, product, sum(distinct quantity) as Total_Quantity from products as p
 join orderdetails as od on p.productid=od.productid
 group by p.productid, product
@@ -121,7 +116,7 @@ order by Total_Quantity desc limit 3;
 
 
 
-# 11. Findout  how many repetitive customers who ordered more than once
+# 15. Findout  how many repetitive customers who ordered more than once
 select count(*) as Repetitive_Customers_Count
 from(select customerid, count(*) as count_of_customers from orders
 group by customerid
@@ -129,7 +124,7 @@ having count(*)>1) as repetitive_customers;
 
 
 
-# 1. To generate the Total_Order_Amount, Total Revenue, Total Profit and Profit Margin for each orderid.
+# 16. To generate the Total_Order_Amount, Total Revenue, Total Profit and Profit Margin for each orderid.
 select o.orderid, Total_Order_Amount , sum(p.Sale_Price * od.Quantity) as Total_Revenue,
 (sum(p.Sale_Price * od.Quantity)-p.Sale_Price) as Profit,
 (sum(p.Sale_Price * od.Quantity)-p.Sale_Price)/ (sum(p.Sale_Price * od.Quantity))*100 as Profit_Margin
@@ -138,7 +133,7 @@ join products as p on p.productid=od.productid
 group by o.orderid, Total_Order_Amount
 order by o.orderid;
 
-# 2. Print the details of different payment methods along with the total amount of money transacted through them in the years 2020 and 2021. Print Payment Type, Allowed, Transaction value in 2020, Transaction value in 2021. Order your output in alphabetical order of Payment Type. Include all payment types that exist in the database.
+# 17. Print the details of different payment methods along with the total amount of money transacted through them in the years 2020 and 2021. Print Payment Type, Allowed, Transaction value in 2020, Transaction value in 2021. Order your output in alphabetical order of Payment Type. Include all payment types that exist in the database.
 select paymenttype, allowed, sum(distinct(case when year(orderdate)='2020' then total_order_amount end)) as Transaction_value_in_2020,
 sum(distinct(case when year(orderdate)='2021' then total_order_amount end)) as Transaction_value_in_2021
 from orders as o join payments as p on o.paymentid=p.paymentid
@@ -150,7 +145,7 @@ order by paymenttype asc;
 
 
 
-# 4. Print Customer ID and days difference between their first order and third order.If two or more orders are placed in a same day then prioritize the order with highest order amount.Filter the output for the customer Id where the days difference is less than 60. Sort the result in ascending order of customer Id.
+# 18. Print Customer ID and days difference between their first order and third order.If two or more orders are placed in a same day then prioritize the order with highest order amount.Filter the output for the customer Id where the days difference is less than 60. Sort the result in ascending order of customer Id.
 with cte as(select customerid,orderdate,total_order_amount,dense_rank()
  over(partition by customerid order by orderdate, total_order_amount desc) as rnk from orders)
  select customerid,timestampdiff(day,min(case when rnk=1 then orderdate end),min(case when rnk=3 then orderdate end)) as third_order 
@@ -163,7 +158,7 @@ with cte as(select customerid,orderdate,total_order_amount,dense_rank()
 
 
  
- # 6. Print the Productid, Quantity and Orderdate for daily top - 3 selling products between January 2020 to March 2020. Essentially you are trying to identify the top 3 products sold for each date between the given date range. Sort the result in ascending order of OrderDate, for records with same orderdate, sort them in ascending order of Quantity.
+ # 19. Print the Productid, Quantity and Orderdate for daily top - 3 selling products between January 2020 to March 2020. Essentially you are trying to identify the top 3 products sold for each date between the given date range. Sort the result in ascending order of OrderDate, for records with same orderdate, sort them in ascending order of Quantity.
  with cte as(select productid,sum(quantity) as total,orderdate from orders a join orderdetails b 
  on a.orderid = b.orderid where orderdate between '2020-01-01'and'2020-03-31' 
  group by productid,orderdate) 
@@ -173,7 +168,7 @@ with cte as(select customerid,orderdate,total_order_amount,dense_rank()
  order by orderdate,total;
 
  
- # 7. How much payment collected through paymentId equal to 2 by each shippers in their first 10 orders. Print Shipper ID and Total payment Collection by that shipper. Sort the table in ascending order of shipper id.
+ # 20. How much payment collected through paymentId equal to 2 by each shippers in their first 10 orders. Print Shipper ID and Total payment Collection by that shipper. Sort the table in ascending order of shipper id.
  with cte as(select shipperid,orderid,sum(total_order_amount) as total from payments as p
  join orders as o on p.paymentid=o.paymentid where p.paymenttype="POD" 
  group by shipperid,orderid), 
@@ -184,10 +179,8 @@ with cte as(select customerid,orderdate,total_order_amount,dense_rank()
  order by shipperid;
  
 
-
-
  
- # 10. Rank the countries in terms of quantity of coffee ordered. Conside only the sub category's Coffee. If two or more country's consumptions are same assign them same rank.Print Rank, Country Name, Total Qunatity.Sort the Output on Ranking in ascending order, if two country rank is same then consider Country name in ascending order.
+ # 21. Rank the countries in terms of quantity of coffee ordered. Conside only the sub category's Coffee. If two or more country's consumptions are same assign them same rank.Print Rank, Country Name, Total Qunatity.Sort the Output on Ranking in ascending order, if two country rank is same then consider Country name in ascending order.
 with cte as(select country,sum(quantity) as total from products p join orderdetails od on p.productid=od.productid 
 join orders o on od.orderid=o.orderid join customers c on o.customerid=c.customerid 
 where sub_category="coffee" 
