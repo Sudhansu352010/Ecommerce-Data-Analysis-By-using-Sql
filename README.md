@@ -10,7 +10,9 @@ Using this data, we will create an interactive and visually appealing PowerBi da
 performance indicators. The dashboard will offer a comprehensive view of the E-commerce performance, 
 highlighting essential insights that can drive strategic decision-making and optimize business operations.
 
-use cricket_db_database;
+# Data Dictionary
+![image](https://github.com/Sudhansu352010/Ecommerce-Data-Analysis-By-using-Sql/assets/131376814/8aa3890c-aac4-4203-8e47-1f99e7449bef)
+
 # Ecommerce Database Analysis by using SQL Query 
 ##Some easy type questions that necessary for project consideration
 
