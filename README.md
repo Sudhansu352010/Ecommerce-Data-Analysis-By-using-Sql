@@ -11,7 +11,8 @@ performance indicators. The dashboard will offer a comprehensive view of the E-c
 highlighting essential insights that can drive strategic decision-making and optimize business operations.
 
 # Data Dictionary
-![image](https://github.com/Sudhansu352010/Ecommerce-Data-Analysis-By-using-Sql/assets/131376814/5c38e17e-ba02-45e2-a3c1-8589a70c725d)
+![image](https://github.com/Sudhansu352010/Ecommerce-Data-Analysis-By-using-Sql/assets/131376814/c7b7a788-40ea-4f4c-a8c0-5b5b563b9a8e)
+
 
 # Ecommerce Database Analysis by using SQL Query 
 ##Some easy type questions that necessary for project consideration
