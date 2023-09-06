@@ -1,6 +1,8 @@
 # Ecommerce-Data-Analysis-By-using-Sql
 ![image](https://github.com/Sudhansu352010/Ecommerce-Data-Analysis-By-using-Sql/assets/131376814/7bbda105-5a93-4cd9-a9f2-0232060dde10)
 
+#  Tools & Technology Used
+![image](https://github.com/Sudhansu352010/Ecommerce-Data-Analysis-By-using-Sql/assets/131376814/964ff773-111f-4f9b-9283-f06ea680d192)
 
 # Problem Statement
 
@@ -10,12 +12,18 @@ Using this data, we will create an interactive and visually appealing PowerBi da
 performance indicators. The dashboard will offer a comprehensive view of the E-commerce performance, 
 highlighting essential insights that can drive strategic decision-making and optimize business operations.
 
+# Our Approach For The Project
+![image](https://github.com/Sudhansu352010/Ecommerce-Data-Analysis-By-using-Sql/assets/131376814/ff417b46-2ab8-4e1b-92e7-f674464acd37)
+
+
 # Data Dictionary
 ![image](https://github.com/Sudhansu352010/Ecommerce-Data-Analysis-By-using-Sql/assets/131376814/c7b7a788-40ea-4f4c-a8c0-5b5b563b9a8e)
 
+# Methodology
+# SQL Query Snapshot
+![image](https://github.com/Sudhansu352010/Ecommerce-Data-Analysis-By-using-Sql/assets/131376814/fad3d2d8-f760-43ec-9bbe-7e58e9928275)
 
 # Ecommerce Database Analysis by using SQL Query 
-##Some easy type questions that necessary for project consideration
 
 # 1.Print the Overall revenue made by the E- Commerce Company
 select sum(total_order_amount) as Total_Revenue from orders;
@@ -53,29 +61,12 @@ order by orderid  asc;
  group  by city
  order by city desc;
  
- # 9. Get the city and states which have less than 3 customers. Print City, State and Count of customers who belong to that city. Sort the result set in alphabetical order of City names.
- select city, state, count(distinct customerid) as Count_of_Customers from customers
- group by city, state
- having count(distinct customerid)<3
- order by city asc;
- 
- 
- # 10. Print all the details of Customers whose First Names start with a vowel. Sort the output in ascending order of Customer ID.
-select * from customers 
-where firstname like 'a%' or firstname like 'e%' or firstname like 'i%' or firstname like 'o%' or firstname like 'u%'
-order  by customerid asc;
+
  
  
  
  
- 
- #Some Medium type questions that necessary for project consideration
- 
-# 1. Count the Number of Orders placed through each Payment Method. Print the PaymentID and the Number of Orders placed in the output. Sort the result set in ascending order of PaymentiD.
- select p.paymentid, count(distinct o.orderid) as Number_of_Orders from orders 
-  as o join payments as p on o.paymentid=p.paymentid
-  group by p.paymentid
-  order by p.paymentid;
+
   
   
 # 2. Identify top 10 most expensive orders. Identify the customers who placed these orders. Print Customer ID, First Name, Last Name and Total Order amount in the result set.Sort the result set in descending order of Total Order Amount.
@@ -127,25 +118,7 @@ order by Total_Quantity desc limit 3;
 
 
 
-# 8. Identify the Average Amount spent by each customer across all the orders placed by them. Print Customer ID, First Name, Last Name and Average Amount Spent. Sort the result set in ascending order of Customer ID.
-select c.customerid, firstname, lastname, avg(total_order_amount) as Average_Amount_Spent from customers 
-as  c join orders as o on c.customerid=o.customerid
-group by c.customerid, firstname,  lastname 
-order by c.customerid asc;
 
-
-# 9. For each customer identify the order which had the Least Total Order Amoun paid by them. Print Customer ID, First Name, Last Name,Least Total Order Amount. Sort the result set in ascending order of Customer ID.
-select c.customerid, firstname, lastname, min(total_order_amount) as Least_Order_Amount from customers 
-as c join orders as o on c.customerid=o.customerid
-group by c.customerid, firstname, lastname
-order by c.customerid asc;
-
-
-# 10. Identify which was the highest transaction value for each payment method. Print Payment ID, Payment Type and Highest transaction value for that particular payment type. Include all payment methods irrespective of their active status. Sort the result set in ascending order of Payment ID.
-select p.paymentid, paymenttype, max(total_order_amount) as Highest_Transaction from orders 
-as o  left join payments as p on o.paymentid=p.paymentid
-group by p.paymentid, paymenttype
-order by p.paymentid asc;
 
 
 # 11. Findout  how many repetitive customers who ordered more than once
@@ -155,7 +128,6 @@ group by customerid
 having count(*)>1) as repetitive_customers;
 
 
-#Some Hard type questions that necessary for project consideration
 
 # 1. To generate the Total_Order_Amount, Total Revenue, Total Profit and Profit Margin for each orderid.
 select o.orderid, Total_Order_Amount , sum(p.Sale_Price * od.Quantity) as Total_Revenue,
@@ -174,13 +146,7 @@ group by paymenttype, allowed
 order by paymenttype asc;
 
 
-# 3. Print CustomerID, Customer Full Name (with a single space in between first name and last name), number of orders ordered, total amount spent across all orders (consider Total Order Amount), Total product quantity (irrespective of the product ID). Identify top 10 customers according to decreasing order of Total spend.
 
-select c.customerid, concat(firstname,' ',lastname) as Full_Name, count(distinct o.orderid) as Num_of_Orders, sum(total_order_amount) as Total_Spend, sum(Quantity) as Total_Quantity
-from customers as c join orders as o on c.customerid=o.customerid
-join orderdetails as od on o.orderid=od.orderid
-group by c.customerid, Full_Name
-order by Total_Spend desc limit 10;
 
 
 
@@ -195,14 +161,7 @@ with cte as(select customerid,orderdate,total_order_amount,dense_rank()
 
 
 
-# 5. Identify the products whose names consist of the word 'Baby'. Then count the number of such products for each Category and Sub Category. Print Category ID, Category Name, Sub Category and followed by the Count. Sort the result in ascending order of Category ID. Secondary sort on the basis of alphabetical order of Sub Category.
-select categoryid,categoryname,sub_category,count(*) from Category c
- join products p on c.categoryid=p.category_id 
- where product like '%Baby%' 
- group by c.categoryid,p.sub_category 
- order by p.category_id,sub_category;
- 
- 
+
  
  # 6. Print the Productid, Quantity and Orderdate for daily top - 3 selling products between January 2020 to March 2020. Essentially you are trying to identify the top 3 products sold for each date between the given date range. Sort the result in ascending order of OrderDate, for records with same orderdate, sort them in ascending order of Quantity.
  with cte as(select productid,sum(quantity) as total,orderdate from orders a join orderdetails b 
@@ -224,21 +183,9 @@ select categoryid,categoryname,sub_category,count(*) from Category c
  group by shipperid 
  order by shipperid;
  
- 
- # 8. Get the Description of customer along with the Customerid and Domain of their email(like gmail.com, yahoo.com). For customer with no lastname take Web as their last name..The Final output should contain this columns Customerid, Domain of their email, Description.Get the details of description from the below attached sample output Description_ column.Sort the result by DateEntered desc, if date entered is same then CustomeId in ascending. Note- All letters are case sensetive take same case letters as given in sample output Description_. Every Day value will have 'th' in front of it.
-
-select c.customerid, substring_index(email, '@', -1) as domain, concat(firstname, ' ', ifnull(lastname, 'Web'), ' was born on ', 
-day(Date_of_birth),"th" ," ", monthname(date_of_birth)," ",year(date_of_birth)," ",'has ordered ', count(*) ,' orders yet.') 
-as description from customers as c left join orders as o on c.customerid=o.customerid 
-group by c.customerid
- order by dateentered desc;
 
 
-# 9. Find and display the CategoryId and Product name of the product with the highest discount. Sort the results by CategoryId, and if there are multiple products with the same discount in the same category, sort them in ascending order by Product Name. Discount can be calculated on the difference between Market price and Sell price.
-select p.category_id, p.product from ( select category_id, max(market_price-sale_price) as max_discount from products group by category_id ) 
-AS c inner join products as p on p.category_id=c.category_id and p.market_price-p.sale_price=c.max_discount
- order by p.category_id, p.product asc;
- 
+
  
  # 10. Rank the countries in terms of quantity of coffee ordered. Conside only the sub category's Coffee. If two or more country's consumptions are same assign them same rank.Print Rank, Country Name, Total Qunatity.Sort the Output on Ranking in ascending order, if two country rank is same then consider Country name in ascending order.
 with cte as(select country,sum(quantity) as total from products p join orderdetails od on p.productid=od.productid 
@@ -246,4 +193,38 @@ join orders o on od.orderid=o.orderid join customers c on o.customerid=c.custome
 where sub_category="coffee" 
 group by country) 
 select dense_rank() over(order by total desc) as rnk,country,total from cte;
+
+# Aggregation on Different KPI’s
+![image](https://github.com/Sudhansu352010/Ecommerce-Data-Analysis-By-using-Sql/assets/131376814/2441e243-7c59-4b5d-b5bf-c64ea2131590)
+--------------------------------------------------------------------------------------------------------------------------------------
+![image](https://github.com/Sudhansu352010/Ecommerce-Data-Analysis-By-using-Sql/assets/131376814/da363ca7-c514-406c-b72a-16d72107d90a)
+--------------------------------------------------------------------------------------------------------------------------------------
+![image](https://github.com/Sudhansu352010/Ecommerce-Data-Analysis-By-using-Sql/assets/131376814/f03eea5f-afd0-414f-86a8-a526d7db2ee7)
+--------------------------------------------------------------------------------------------------------------------------------------
+![image](https://github.com/Sudhansu352010/Ecommerce-Data-Analysis-By-using-Sql/assets/131376814/6deffd66-5172-454b-8d0a-b6f3149696ed)
+
+
+# Dashboard
+![image](https://github.com/Sudhansu352010/Ecommerce-Data-Analysis-By-using-Sql/assets/131376814/26d56639-5691-4442-b05c-9a2e61dd1935)
+
+
+# Key Insights
+1. Sales growth in each of the respective quarters of the year is not satisfactory.
+2. Revenue continuously decreases; the company should take precautionary action for that.
+3. The company mainly focuses on its average delivery time for each order.
+4. The retention rate of customers is good.
+5. Alpha Imports generate the highest percentage of revenue, while Tasha Apparel generates the lowest percentage of revenue.
+6. Brands like Prestige generate the highest revenue.
+7. The category Beauty and Hygiene generates the highest revenue.
+8. The brand with the highest average ratings is Alkalen, i.e., 4.50, and the brand with the lowest average ratings is Raw Pressery, i.e., 3.35.
+9. Skin care, Fragrances, and Cookware are the top-selling subcategories by revenue.
+10. Organic, Herbs, and Marinade are the least selling subcategories by revenue.
+11. Beauty & Hygiene, Kitchen, and World Food are the top-selling categories by revenue.
+12. Fruits & Vegetables, Eggs Meat & Fish, and Bakery are the highest selling categories by revenue.
+13. BB Home, bb Royal, and Fresho are the top-selling brands according to quantity.
+14. Stainless steel Contura pressure cooker products generate the maximum revenue, while Marie Light Oats Biscuits generate the least revenue in terms of product.
+
+
+
+
 
